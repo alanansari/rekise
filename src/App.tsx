@@ -26,6 +26,8 @@ const rotationAngle = (Math.atan2(end[1] - start[1], end[0] - start[0]) * 180) /
 
 const center = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
 
+const FPS = 2;
+
 function App() {
 
   const [position, setPosition] = useState(start);
@@ -33,13 +35,13 @@ function App() {
   
   useEffect(() => {
     const interval = setInterval(() => {
-      const distance = speed / 3600; // km/s
+      const distance = speed / 3600 * FPS; // km/s
       const angle = Math.atan2(end[1] - position[1], end[0] - position[0]);
       setAngle(angle);
       const dx = distance * Math.cos(angle);
       const dy = distance * Math.sin(angle);
       setPosition([position[0] + dx, position[1] + dy]);
-    }, 500);
+    }, 1000 / FPS);
     if (position[0] >= end[0] && position[1] >= end[1]) {
       clearInterval(interval);
     }
